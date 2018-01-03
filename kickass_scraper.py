@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/bin/python
 
 from bs4 import BeautifulSoup
 from warnings import warn
