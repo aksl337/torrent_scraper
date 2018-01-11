@@ -46,7 +46,8 @@ def soup_maker():
     response = requests.get(main_url, headers=headers)
     # check appropriate response code 200
     if response.status_code != 200:
-        warn('Request: {}; Status code: {}'.format(requests, response.status_code))
+        warn('Request: {}; Status code: {}'.format(main_url, response.status_code))
+        sys.exit(0)
     # beautifulsoup extracter
     my_soup = BeautifulSoup(response.text, 'lxml')
     torrent_data = my_soup.findAll(class_="odd", id="torrent_latest_torrents12975568")
