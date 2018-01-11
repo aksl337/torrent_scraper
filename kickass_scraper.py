@@ -57,7 +57,7 @@ def soup_maker():
     print "{} movies found with result containing {}....\n".format(len(sizes_all), search_string)
     if len(sizes_all) == 0:
         print (bcolors.FAIL + 'Nothing found try different search string' + bcolors.ENDC)
-        sys.exit(0)
+        soup_maker()
     print_movies()
     magnet_printer()
 
