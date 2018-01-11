@@ -37,9 +37,6 @@ def signal_handler(signal, frame):
     sys.exit(0)
 
 
-signal.signal(signal.SIGINT, signal_handler)
-
-
 # grab the page from url
 
 
@@ -98,4 +95,5 @@ def magnet_printer():
 
 
 if __name__ == "__main__":
+    signal.signal(signal.SIGINT, signal_handler)
     soup_maker()
