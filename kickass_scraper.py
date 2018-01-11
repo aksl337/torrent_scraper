@@ -5,9 +5,11 @@ from warnings import warn
 import requests
 import clipboard
 import sys
-
+import signal
 
 # Colored output
+
+
 class bcolors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
@@ -26,6 +28,17 @@ seeders_all = []
 leechers_all = []
 magnet_links_all = []
 headers = {"Accept-Language": "en-US, en;q=0.5"}
+
+# little ctrl+c handler
+
+
+def signal_handler(signal, frame):
+    print('      BYE............................')
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, signal_handler)
+
 
 # grab the page from url
 
