@@ -50,7 +50,6 @@ def soup_maker():
             while iter_two:
                 try:
                     response = requests.get(main_url, headers=headers)
-                    print 'hitting'
                     break
                 # check appropriate response code 200
                 # if response.status_code != 200:
