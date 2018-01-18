@@ -45,7 +45,7 @@ def soup_maker():
     while iter_one:
         search_string = raw_input(bcolors.OKGREEN + "\nsearch for files-->\n " + bcolors.ENDC)
         if not search_string.strip():
-            print 'please enter something'
+            print 'please enter something \nor ctrl+c to exit'
         else:
             main_url = "https://kickass-cd.pbproxy.lol/usearch/{}/?field=seeders&sorder=desc".format(search_string)
             response = requests.get(main_url, headers=headers)
