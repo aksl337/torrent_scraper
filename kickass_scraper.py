@@ -28,17 +28,14 @@ sizes_all = []
 seeders_all = []
 leechers_all = []
 magnet_links_all = []
-headers = {"Accept-Language": "en-US, en;q=0.5"}
+headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36", "Accept-Language": "en-US, en;q=0.5"}
 
 # little ctrl+c handler
 
 
 def signal_handler(signal, frame):
-    print('      BYE............................')
+    print '\n{} Bye {}\n'.format('_' * 65, '_' * 65)
     sys.exit(0)
-
-
-# grab the page from url
 
 
 def soup_maker():
@@ -57,37 +54,43 @@ def soup_maker():
                     break
                 # check appropriate response code 200
                 # if response.status_code != 200:
-                except response.raise_for_status():
+                except response.raise_for_status() as e:
                     warn('Request: {}; Status code: {}'.format(main_url, response.status_code))
+                    print(str(e))
                     sys.exit(0)
+                except requests.Timeout as e:
+                    warn('Request: {}; Status code: {}'.format(main_url, response.status_code))
+                    print(str(e))
                 except requests.exceptions.ConnectionError:
                     warn('Request: {}; Status code: {}'.format(main_url, response.status_code))
                     print ('connection refused by server')
                     print ('lemme try again...')
                     sleep(10)
-                    iter_two = 0
+                    continue
             # beautifulsoup extracter
             my_soup = BeautifulSoup(response.text, 'lxml')
             torrent_data = my_soup.findAll(class_="odd", id="torrent_latest_torrents12975568")
+            if not torrent_data:
+                warn("nothing found this time ,\nseems trusted source acting weird, see-->{}".format(torrent_data))
+            else:
+                for container in torrent_data:
+                    # cooking my soup adding data to lists
+                    movie = container.find_all('a')[-2].text.encode('utf-8')
+                    movies_all.append(movie)
+                    size = container.find(class_='nobr center').text.encode('utf-8')
+                    sizes_all.append(size)
+                    seeder = container.find(class_='green center').text.encode('utf-8')
+                    seeders_all.append(seeder)
+                    leecher = container.find(class_='red lasttd center').text
+                    leechers_all.append(leecher)
+                    magnet_link = container.find_all('a')[2].get('href')
+                    magnet_links_all.append(magnet_link)
 
-            for container in torrent_data:
-                # cooking my soup adding data to lists
-                movie = container.find_all('a')[-2].text.encode('utf-8')
-                movies_all.append(movie)
-                size = container.find(class_='nobr center').text.encode('utf-8')
-                sizes_all.append(size)
-                seeder = container.find(class_='green center').text.encode('utf-8')
-                seeders_all.append(seeder)
-                leecher = container.find(class_='red lasttd center').text
-                leechers_all.append(leecher)
-                magnet_link = container.find_all('a')[2].get('href')
-                magnet_links_all.append(magnet_link)
-
-            print "{} movies found with result containing {}....\n".format(len(sizes_all), search_string)
-            if len(sizes_all) == 0:
-                print (bcolors.FAIL + 'Nothing found try different search string' + bcolors.ENDC)
-                soup_maker()
-            iter_one = False
+                print "{} movies found with result containing {}....\n".format(len(sizes_all), search_string)
+                if len(sizes_all) == 0:
+                    print (bcolors.FAIL + 'Nothing found try different search string' + bcolors.ENDC)
+                    soup_maker()
+                iter_one = False
     print_movies()
     magnet_printer()
 
@@ -109,7 +112,7 @@ def magnet_printer():
             clipboard.copy(magnet_links_all[int(more_mag)])
         elif more_mag.lower() == "ee":
             iter_one = False
-            print 'bye'
+            print '\n{} Bye {}\n'.format('_' * 65, '_' * 65)
             sys.exit()
         elif more_mag.lower() == "gg":
             soup_maker()
