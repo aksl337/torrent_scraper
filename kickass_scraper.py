@@ -85,7 +85,7 @@ def soup_maker():
                     magnet_link = container.find_all('a')[2].get('href')
                     magnet_links_all.append(magnet_link)
 
-                print "{} movies found with result containing {}....\n".format(len(sizes_all), search_string)
+                # print "{} movies found with result containing {}....\n".format(len(sizes_all), search_string)
                 if len(sizes_all) == 0:
                     print (bcolors.FAIL + 'Nothing found try different search string' + bcolors.ENDC)
                     soup_maker()
