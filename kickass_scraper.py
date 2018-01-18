@@ -6,6 +6,7 @@ import requests
 import clipboard
 import sys
 import signal
+from time import sleep
 
 # Colored output
 
@@ -48,11 +49,23 @@ def soup_maker():
             print 'please enter something \nor ctrl+c to exit'
         else:
             main_url = "https://kickass-cd.pbproxy.lol/usearch/{}/?field=seeders&sorder=desc".format(search_string)
-            response = requests.get(main_url, headers=headers)
-            # check appropriate response code 200
-            if response.status_code != 200:
-                warn('Request: {}; Status code: {}'.format(main_url, response.status_code))
-                sys.exit(0)
+            iter_two = 1
+            while iter_two:
+                try:
+                    response = requests.get(main_url, headers=headers)
+                    print 'hitting'
+                    break
+                # check appropriate response code 200
+                # if response.status_code != 200:
+                except response.raise_for_status():
+                    warn('Request: {}; Status code: {}'.format(main_url, response.status_code))
+                    sys.exit(0)
+                except requests.exceptions.ConnectionError:
+                    warn('Request: {}; Status code: {}'.format(main_url, response.status_code))
+                    print ('connection refused by server')
+                    print ('lemme try again...')
+                    sleep(10)
+                    iter_two = 0
             # beautifulsoup extracter
             my_soup = BeautifulSoup(response.text, 'lxml')
             torrent_data = my_soup.findAll(class_="odd", id="torrent_latest_torrents12975568")
@@ -97,6 +110,7 @@ def magnet_printer():
         elif more_mag.lower() == "ee":
             iter_one = False
             print 'bye'
+            sys.exit()
         elif more_mag.lower() == "gg":
             soup_maker()
         else:
