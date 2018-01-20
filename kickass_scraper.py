@@ -45,20 +45,22 @@ def soup_maker():
             print 'please enter something \nor ctrl+c to exit'
         else:
             main_url = "https://kickass-cd.pbproxy.lol/usearch/{}/?field=seeders&sorder=desc".format(search_string)
-            iter_two = 1
-            while iter_two:
+            while True:
                 try:
                     response = requests.get(main_url, headers=headers, timeout=10)
                     break
                 # check appropriate response code 200
                 except requests.exceptions.HTTPError as e:
-                    print ('connection refused by server')
+                    print ('connection refused by server,make sure site is up and working...')
                     print ('lemme try again...')
-                    sleep(10)
+                    sleep(5)
                     continue
                 except requests.Timeout as e:
                     print(str(e))
                     print 'timed out'
+                    print('lemme try again')
+                    sleep(5)
+                    continue
                 except requests.ConnectionError:
                     print 'network problem, are you sure ,you are online?'
                     sys.exit()
@@ -102,7 +104,7 @@ def magnet_printer():
     while iter_one:
         more_mag = raw_input("Enter num. from list for magnet link or 'ee' to exit or 'gg' for search again--->\n\t")
         if not more_mag.strip():
-            print 'enter something'
+            print (bcolors.FAIL + "enter something\n" + bcolors.ENDC)
         elif more_mag in str(range(len(movies_all))):
             print (bcolors.WARNING + "\n magnet link copied to your clipboard already" + bcolors.ENDC)
             clipboard.copy(magnet_links_all[int(more_mag)])
