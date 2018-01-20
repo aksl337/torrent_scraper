@@ -1,7 +1,6 @@
 #!/bin/python
 
 from bs4 import BeautifulSoup
-from warnings import warn
 import requests
 import clipboard
 import sys
@@ -49,28 +48,26 @@ def soup_maker():
             iter_two = 1
             while iter_two:
                 try:
-                    response = requests.get(main_url, headers=headers)
+                    response = requests.get(main_url, headers=headers, timeout=10)
                     break
                 # check appropriate response code 200
-                # if response.status_code != 200:
-                except response.raise_for_status() as e:
-                    warn('Request: {}; Status code: {}'.format(main_url, response.status_code))
-                    print(str(e))
-                    sys.exit(0)
-                except requests.Timeout as e:
-                    warn('Request: {}; Status code: {}'.format(main_url, response.status_code))
-                    print(str(e))
-                except requests.exceptions.ConnectionError:
-                    warn('Request: {}; Status code: {}'.format(main_url, response.status_code))
+                except requests.exceptions.HTTPError as e:
                     print ('connection refused by server')
                     print ('lemme try again...')
                     sleep(10)
                     continue
-            # beautifulsoup extracter
+                except requests.Timeout as e:
+                    print(str(e))
+                    print 'timed out'
+                except requests.ConnectionError:
+                    print 'network problem, are you sure ,you are online?'
+                    sys.exit()
+
+                    # beautifulsoup extracter
             my_soup = BeautifulSoup(response.text, 'lxml')
             torrent_data = my_soup.findAll(class_="odd", id="torrent_latest_torrents12975568")
             if not torrent_data:
-                warn("nothing found this time ,\nseems trusted source acting weird, see-->{}".format(torrent_data))
+                "nothing found this time ,\nseems trusted source acting weird, see-->{}".format(torrent_data)
             else:
                 for container in torrent_data:
                     # cooking my soup adding data to lists
@@ -85,7 +82,6 @@ def soup_maker():
                     magnet_link = container.find_all('a')[2].get('href')
                     magnet_links_all.append(magnet_link)
 
-                # print "{} movies found with result containing {}....\n".format(len(sizes_all), search_string)
                 if len(sizes_all) == 0:
                     print (bcolors.FAIL + 'Nothing found try different search string' + bcolors.ENDC)
                     soup_maker()
@@ -105,8 +101,9 @@ def magnet_printer():
     iter_one = True
     while iter_one:
         more_mag = raw_input("Enter num. from list for magnet link or 'ee' to exit or 'gg' for search again--->\n\t")
-        if more_mag in str(range(len(movies_all))):
-            # print "magnet link for your movie--->\n{}->".format(magnet_links_all[int(more_mag)])
+        if not more_mag.strip():
+            print 'enter something'
+        elif more_mag in str(range(len(movies_all))):
             print (bcolors.WARNING + "\n magnet link copied to your clipboard already" + bcolors.ENDC)
             clipboard.copy(magnet_links_all[int(more_mag)])
         elif more_mag.lower() == "ee":
