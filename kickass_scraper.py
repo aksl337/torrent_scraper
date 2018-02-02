@@ -69,7 +69,7 @@ def soup_maker():
             my_soup = BeautifulSoup(response.text, 'lxml')
             torrent_data = my_soup.findAll(class_="odd", id="torrent_latest_torrents12975568")
             if not torrent_data:
-                "nothing found this time ,\nseems trusted source acting weird, see-->{}".format(torrent_data)
+                print "nothing found this time ,\nseems trusted source acting weird, see-->{}".format(torrent_data)
             else:
                 for container in torrent_data:
                     # cooking my soup adding data to lists
