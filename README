@@ -1,1 +1,7 @@
 simple command line script to browse torrent.
+kickass not working use l337.py instead.
+
+#python l337.py
+
+make sure you have module requirements satisfied.
+pip -r requirements.txt
