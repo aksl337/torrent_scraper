@@ -69,7 +69,7 @@ def soup_maker(page=page_count):
             # soup = BeautifulSoup(open("/root/new_scrape/1337x.html"), "html.parser")
             soup_data = my_soup.findAll(class_="table-list table table-responsive table-striped")
             if not soup_data:
-                print "nothing found this time ,\nseems trusted source acting weird, see-->{}".format(soup_data)
+                print "nothing found this time ,\ntry different search string, see-->{}".format(soup_data)
             else:
                 for container in soup_data:
                     names_links = container.find_all('a', href=re.compile("torrent"))
@@ -120,7 +120,7 @@ def magnet_printer():
     iter_one = True
     magnets = []
     while iter_one:
-        more_mag = raw_input("Enter num. from list for magnet link or 'mm' for more results of same or 'gg' for search again or \n 'ee' to exit   --->\n\t")
+        more_mag = raw_input("Enter num. from list for magnet link or 'mm' for more results of same or 'gg' for different search or \n 'ee' to exit   --->\n\t")
         if not more_mag.strip():
             print (bcolors.FAIL + "enter something\n" + bcolors.ENDC)
         elif more_mag in str(range(len(linkss))):
