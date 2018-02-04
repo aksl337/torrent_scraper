@@ -40,6 +40,7 @@ def link_grabber(source_url):
     while True:
         try:
             response = requests.get(source_url, headers=headers, timeout=10)
+            return response
             break
         # check appropriate response code 200
         except requests.exceptions.HTTPError as e:
@@ -48,7 +49,7 @@ def link_grabber(source_url):
             sleep(5)
             continue
         except requests.Timeout as e:
-            print(str(e))
+            print e
             print 'timed out'
             print('lemme try again')
             sleep(5)
@@ -66,9 +67,8 @@ def soup_maker(page=page_count):
             print 'please enter something \nor ctrl+c to exit'
         else:
             main_url = "http://1337x.pbproxy.lol/sort-search/{}/seeders/desc/{}/".format(search_string, str(page))
-            link_grabber(main_url)
             # beautifulsoup extracter
-            my_soup = BeautifulSoup(response.text, 'lxml')
+            my_soup = BeautifulSoup(link_grabber(main_url).text, 'lxml')
             # soup = BeautifulSoup(open("/root/new_scrape/1337x.html"), "html.parser")
             soup_data = my_soup.findAll(class_="table-list table table-responsive table-striped")
             if not soup_data:
@@ -128,8 +128,7 @@ def magnet_printer():
             print (bcolors.FAIL + "enter something\n" + bcolors.ENDC)
         elif more_mag in str(range(len(linkss))):
             sitelink = "http://1337x.pbproxy.lol" + str(linkss[int(more_mag)])
-            link_grabber(sitelink)
-            souped = BeautifulSoup(response.text, 'lxml')
+            souped = BeautifulSoup(link_grabber(sitelink).text, 'lxml')
             mainlink = souped.findAll('a', href=re.compile("magnet"))
             for contain in mainlink:
                 magnets.append(contain.get('href'))
