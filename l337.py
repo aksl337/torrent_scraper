@@ -82,7 +82,7 @@ def soup_maker(page=page_count):
                 for leech in leeches:
                     leechers.append(leech.text)
                 for link in names_links:
-                    names.append(link.text.replace(" ", "").replace(u"\u2018", "'").replace(u"\u2019", "'"))
+                    names.append(link.text.replace(" ", "").replace(u"\u2018", "'").replace(u"\u2019", "'").replace(u"\xf1", "'"))
                     linkss.append(link.get('href'))
                 for size in sizes_all[1:]:
                     if size.span:
@@ -149,9 +149,9 @@ def magnet_printer():
             mainlink = souped.findAll('a', href=re.compile("magnet"))
             for contain in mainlink:
                 magnets.append(contain.get('href'))
-                magnets = list(set(magnets))
-            print (bcolors.WARNING + "\n magnet link copied to your clipboard already" + bcolors.ENDC)
-            clipboard.copy(magnets[0])
+            clipboard.copy(magnets[-1])
+            print (bcolors.WARNING + "\n magnet link copied to your clipboard already..." + bcolors.ENDC)
+            print magnets
         elif more_mag.lower() == "ee":
             iter_one = False
             print '\n{} Bye {}\n'.format('_' * 65, '_' * 65)
