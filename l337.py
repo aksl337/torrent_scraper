@@ -151,7 +151,6 @@ def magnet_printer():
                 magnets.append(contain.get('href'))
             clipboard.copy(magnets[-1])
             print (bcolors.WARNING + "\n magnet link copied to your clipboard already..." + bcolors.ENDC)
-            print magnets
         elif more_mag.lower() == "ee":
             iter_one = False
             print '\n{} Bye {}\n'.format('_' * 65, '_' * 65)
