@@ -89,9 +89,8 @@ def soup_maker(page=page_count):
                     linkss.append(link.get('href'))
                 for size in sizes_all[1:]:
                     if size.span:
-                        _ = size.span.extract()
+                        size.span.extract()
                     sizes.append(size.text)
-                del _
                 for dates in dates_all:
                     date_time.append(dates.text.replace(" ", ""))
 
