@@ -85,7 +85,7 @@ def soup_maker(page=page_count):
                 for leech in leeches:
                     leechers.append(leech.text)
                 for link in names_links:
-                    names.append(link.text.replace(" ", "").replace(u"\u2018", "'").replace(u"\u2019", "'").replace(u"\xf1", "'"))
+                    names.append(link.text.encode('utf-8'))
                     linkss.append(link.get('href'))
                 for size in sizes_all[1:]:
                     if size.span:
