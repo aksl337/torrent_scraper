@@ -1,4 +1,5 @@
 #!/bin/python
+''' Browse torrent easier(and ad-free), just enter the search string '''
 import re
 from bs4 import BeautifulSoup
 import requests
@@ -106,13 +107,6 @@ def soup_maker(page=page_count):
 
 
 def print_movies():
-    # printing stuff for users
-    '''print "links{} leec{} seeds{} names{} sizes{}".format(len(linkss), len(leechers), len(seeders), len(names), len(sizes))
-    for size in sizes:
-        print size
-    for link in linkss:
-        print linkss'''
-
     for i in range(len(linkss)):
         print (bcolors.OKGREEN + "{0}.  {1}\t".format(i, names[i]) + bcolors.ENDC),
         print (bcolors.HEADER + "size{0}seeds-{1} leeches-{2}".format(sizes[i], seeders[i], leechers[i]) + bcolors.ENDC)
