@@ -1,8 +1,8 @@
 from distutils.core import setup
 
 setup(
-    name='1337torrent',
-    packages=['1337torrent'],
+    name='torrent-grab',
+    packages=['torrent-grab'],
     version='0.1',
     description='command line torrent scrapper',
     author='Akshay Jadhav',
@@ -11,7 +11,7 @@ setup(
     url='https://github.com/aksl337/torrent_scraper',
     download_url='https://github.com/aksl337/torrent_scraper/archive/0.1.tar.gz',
     python_requires='>=2.7',
-    scripts=['1337torrent/1337.py'],
+    scripts=['torrent-grab/torrent-grab.py'],
     install_requires=[
         'BeautifulSoup4',
         'clipboard',
