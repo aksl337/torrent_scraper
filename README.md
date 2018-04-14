@@ -1,4 +1,6 @@
 # Browse torrent from good-old shell(bye-bye crappy ads:grin:)
+[![Build Status](https://travis-ci.org/aksl337/torrent_scraper.svg?branch=master)](ttps://travis-ci.org/aksl337/torrent_scraper)
+
 
 
 ## Installation by [Pip](http://pip.readthedocs.org/en/stable/installing/)
