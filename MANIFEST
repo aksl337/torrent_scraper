@@ -2,4 +2,4 @@
 setup.cfg
 setup.py
 torrent-grab/__init__.py
-torrent-grab/torrent-grab.py
+torrent-grab/torrent-grab
