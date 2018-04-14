@@ -1,11 +1,11 @@
-# Browse torrent from good old shell(bye-bye crappy ads :grin: ).
+# Browse torrent from good-old shell(bye-bye carppy ads:grin:)
 
 
 ## Installation by [Pip](http://pip.readthedocs.org/en/stable/installing/)
 For Python 2.7
 
 ```bash
-$  pip install 1337torrent
+$  pip install torrent-grab
 ```
 
 or just run script with python
@@ -18,5 +18,5 @@ $  pip -r requirements.txt
 ## Usage
 
 ```bash
-$ 1337torrent
+$ torrent-grab
 ```
