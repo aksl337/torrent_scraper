@@ -11,12 +11,8 @@ setup(
     url='https://github.com/aksl337/torrent_scraper',
     download_url='https://github.com/aksl337/torrent_scraper/archive/0.1.tar.gz',
     python_requires='>=2.7',
-    scripts=['torrent-grab/torrent-grab.py'],
-    install_requires=[
-        'BeautifulSoup4',
-        'clipboard',
-        'requests'
-    ],
+    scripts=['torrent-grab/torrent-grab'],
+    install_requires=['BeautifulSoup4', 'clipboard', 'requests'],
     keywords=['torrent browse', 'scrapper', 'torrent'],
     classifiers=[],
 )
