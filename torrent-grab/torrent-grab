@@ -67,7 +67,7 @@ def soup_maker(page=page_count):
         if not search_string.strip():
             print 'please enter something \nor ctrl+c to exit'
         else:
-            main_url = "http://1337x.pbproxy.lol/sort-search/{}/seeders/desc/{}/".format(search_string, str(page))
+            main_url = "http://1337x.socialrift.uk/sort-search/{}/seeders/desc/{}/".format(search_string, str(page))
             # beautifulsoup extracter
             my_soup = BeautifulSoup(link_grabber(main_url).text, 'lxml')
             # soup = BeautifulSoup(open("/root/new_scrape/1337x.html"), "html.parser")
@@ -107,9 +107,10 @@ def soup_maker(page=page_count):
 
 
 def print_movies():
-    for i in range(len(linkss)):
+    # using sizes to iterate rather than links earlier links give few more results with break the script
+    for i in range(len(sizes)):
         print (bcolors.OKGREEN + "{0}.  {1}\t".format(i, names[i]) + bcolors.ENDC),
-        print (bcolors.HEADER + "size{0}seeds-{1} leeches-{2}".format(sizes[i], seeders[i], leechers[i]) + bcolors.ENDC)
+        print (bcolors.HEADER + "size{0} seeds-{1} leeches-{2}".format(sizes[i], seeders[i], leechers[i]) + bcolors.ENDC)
 
 
 def magnet_printer():
@@ -120,7 +121,8 @@ def magnet_printer():
         if not more_mag.strip():
             print (bcolors.FAIL + "enter something\n" + bcolors.ENDC)
         elif more_mag in str(range(len(linkss))):
-            sitelink = "http://1337x.pbproxy.lol" + str(linkss[int(more_mag)])
+            sitelink = "https://1337x.socialrift.uk" + str(linkss[int(more_mag)])
+            print sitelink
             souped = BeautifulSoup(link_grabber(sitelink).text, 'lxml')
             mainlink = souped.findAll('a', href=re.compile("magnet"))
             for contain in mainlink:
