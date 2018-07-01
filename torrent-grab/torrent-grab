@@ -67,7 +67,7 @@ def soup_maker(page=page_count):
         if not search_string.strip():
             print 'please enter something \nor ctrl+c to exit'
         else:
-            main_url = "http://1337x.socialrift.uk/sort-search/{}/seeders/desc/{}/".format(search_string, str(page))
+            main_url = "http://1337x.proxybunker.co.uk/sort-search/{}/seeders/desc/{}/".format(search_string, str(page))
             # beautifulsoup extracter
             my_soup = BeautifulSoup(link_grabber(main_url).text, 'lxml')
             # soup = BeautifulSoup(open("/root/new_scrape/1337x.html"), "html.parser")
