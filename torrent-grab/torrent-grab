@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/python3
 ''' Browse torrent easier(and ad-free), just enter the search string '''
 import re
 from bs4 import BeautifulSoup
@@ -32,7 +32,7 @@ page_count = 1
 
 
 def signal_handler(signal, frame):
-    print '\n{} Bye {}\n'.format('_' * 65, '_' * 65)
+    print('\n{} Bye {}\n'.format('_' * 65, '_' * 65))
     sys.exit(0)
 
 
@@ -50,30 +50,30 @@ def link_grabber(source_url):
             sleep(5)
             continue
         except requests.Timeout as e:
-            print e
-            print 'timed out'
+            print(e)
+            print('timed out')
             print('lemme try again')
             sleep(5)
             continue
         except requests.ConnectionError:
-            print 'network problem, are you sure ,you are online?'
+            print('network problem, are you sure ,you are online?')
             sys.exit()
 
 
 def soup_maker(page=page_count):
     iter_one = True
     while iter_one:
-        search_string = raw_input(bcolors.OKGREEN + "\nsearch for files-->\n " + bcolors.ENDC)
+        search_string = input(bcolors.OKGREEN + "\nsearch for files-->\n " + bcolors.ENDC)
         if not search_string.strip():
-            print 'please enter something \nor ctrl+c to exit'
+            print('please enter something \nor ctrl+c to exit')
         else:
-            main_url = "https://1337x.proxybunker.co.uk/sort-search/{}/seeders/desc/{}/".format(search_string, str(page))
+            main_url = "https://1337x.to/sort-search/{}/seeders/desc/{}/".format(search_string, str(page))
             # beautifulsoup extracter
             my_soup = BeautifulSoup(link_grabber(main_url).text, 'lxml')
-            # soup = BeautifulSoup(open("/root/new_scrape/1337x.html"), "html.parser")
+            # soup = BeautifulSoup(open("/dummy/webpage.html"), "html.parser")
             soup_data = my_soup.findAll(class_="table-list table table-responsive table-striped")
             if not soup_data:
-                print "nothing found this time ,\ntry different search string, see-->{}".format(soup_data)
+                print("nothing found this time ,\ntry different search string, see-->{}".format(soup_data))
             else:
                 for container in soup_data:
                     names_links = container.find_all('a', href=re.compile("torrent"))
@@ -99,7 +99,7 @@ def soup_maker(page=page_count):
                     numbers.append(i)
 
                 if len(sizes) == 0:
-                    print (bcolors.FAIL + 'Nothing found try different search string' + bcolors.ENDC)
+                    print((bcolors.FAIL + 'Nothing found try different search string' + bcolors.ENDC))
                     soup_maker()
                 iter_one = False
     print_movies()
@@ -109,36 +109,36 @@ def soup_maker(page=page_count):
 def print_movies():
     # using sizes to iterate rather than links earlier links give few more results with break the script
     for i in range(len(sizes)):
-        print (bcolors.OKGREEN + "{0}.  {1}\t".format(i, names[i]) + bcolors.ENDC),
-        print (bcolors.HEADER + "size{0} seeds-{1} leeches-{2}".format(sizes[i], seeders[i], leechers[i]) + bcolors.ENDC)
+        print((bcolors.OKGREEN + "{0}.  {1}\t".format(i, names[i]) + bcolors.ENDC), end =' ')
+        print((bcolors.HEADER + "size{0} seeds-{1} leeches-{2}".format(sizes[i], seeders[i], leechers[i]) + bcolors.ENDC))
 
 
 def magnet_printer():
     iter_one = True
     magnets = []
     while iter_one:
-        more_mag = raw_input("Enter num. from list for magnet link or 'mm' for more results of same or 'gg' for different search or \n 'ee' to exit   --->\n\t")
+        more_mag = input("Enter num. from list for magnet link or 'mm' for more results of same or 'gg' for different search or \n 'ee' to exit   --->\n\t")
         if not more_mag.strip():
-            print (bcolors.FAIL + "enter something\n" + bcolors.ENDC)
-        elif more_mag in str(range(len(linkss))):
-            sitelink = "https://1337x.proxybunker.co.uk" + str(linkss[int(more_mag)])
-            print sitelink
+            print((bcolors.FAIL + "enter something\n" + bcolors.ENDC))
+        elif more_mag in str(list(range(len(linkss)))):
+            sitelink = "https://1337x.to" + str(linkss[int(more_mag)])
+            print(sitelink)
             souped = BeautifulSoup(link_grabber(sitelink).text, 'lxml')
             mainlink = souped.findAll('a', href=re.compile("magnet"))
             for contain in mainlink:
                 magnets.append(contain.get('href'))
             clipboard.copy(magnets[-1])
-            print (bcolors.WARNING + "\n magnet link copied to your clipboard already..." + bcolors.ENDC)
+            print((bcolors.WARNING + "\n magnet link copied to your clipboard already..." + bcolors.ENDC))
         elif more_mag.lower() == "ee":
             iter_one = False
-            print '\n{} Bye {}\n'.format('_' * 65, '_' * 65)
+            print('\n{} Bye {}\n'.format('_' * 65, '_' * 65))
             sys.exit()
         elif more_mag.lower() == "gg":
             soup_maker()
         elif more_mag.lower() == "mm":
             soup_maker(page=page_count + 1)
         else:
-            print (bcolors.FAIL + "Unknown input !!! finger slipping detected...." + bcolors.ENDC)
+            print((bcolors.FAIL + "Unknown input !!! finger slipping detected...." + bcolors.ENDC))
 
 
 def main():
@@ -148,3 +148,4 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
