@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='torrent-grab',
-    version='0.0.2dev1',
+    version='0.1',
     description='command line torrent scraper',
     author='Akshay Jadhav',
     author_email='akshay111jadhav@gmail.com',
