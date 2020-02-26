@@ -4,7 +4,7 @@
 
 
 ## Installation by [Pip](http://pip.readthedocs.org/en/stable/installing/)
-For Python 2.7
+For Python 3
 
 ```bash
 $  pip install torrent-grab
