@@ -7,7 +7,7 @@
 For Python 3
 
 ```bash
-$  pip install torrent-grab
+$  pip install torrent-grab==0.0.2.dev1
 ```
 
 or just run script with python
